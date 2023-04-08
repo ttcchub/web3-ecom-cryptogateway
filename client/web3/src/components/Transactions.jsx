@@ -2,7 +2,7 @@
 const Transactions = () => {
 
   return (
-      <h1> HELLLO </h1>
+      <h1> Transactions </h1>
   );
 };
 
