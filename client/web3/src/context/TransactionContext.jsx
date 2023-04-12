@@ -77,6 +77,7 @@ export const TransactionsProvider = ({ children }) => {
         const transactionsContract = createEthereumContract();
         const currentTransactionCount = await transactionsContract.getTransactionCount();
 
+        // 
         window.localStorage.setItem("transactionCount", currentTransactionCount);
       }
     } catch (error) {
@@ -119,12 +120,13 @@ export const TransactionsProvider = ({ children }) => {
         });
 
         const transactionHash = await transactionsContract.addToBlockchain(addressTo, parsedAmount, message, keyword);
-
+        //  <- transaction procedure with laoading stage -> 
+        
         setIsLoading(true);
         console.log(`Loading - ${transactionHash.hash}`);
         await transactionHash.wait();
         console.log(`Success - ${transactionHash.hash}`);
-        setIsLoading(false);
+        setIsLoading(false); 
 
         const transactionsCount = await transactionsContract.getTransactionCount();
 
