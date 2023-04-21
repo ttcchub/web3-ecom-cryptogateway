@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { SiEthereum } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
@@ -9,6 +9,9 @@ import { shortenAddress } from "../utils/shortenAddress";
 import { Loader } from ".";
 
 const companyCommonStyles = "min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white";
+
+
+
 
 const Input = ({ placeholder, name, type, value, handleChange }) => (
   <input
@@ -22,10 +25,21 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
 );
 
 const Welcome = () => {
-  const { currentAccount, connectWallet, handleChange, sendTransaction, formData, isLoading } = useContext(TransactionContext);
+  
+  
+  useEffect(() => {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const totalPrice = urlParams.get("totalPrice");
+  const names = urlParams.get("names");
+  const message = urlParams.get("message");
+  updateFromUrl(totalPrice, names, message);
 
+}, []);
+  const { currentAccount, connectWallet, handleChange, sendTransaction, formData, isLoading,updateFromUrl } = useContext(TransactionContext);
+
+  const { addressTo, amount, keyword, message } = formData;
   const handleSubmit = (e) => {
-    const { addressTo, amount, keyword, message } = formData;
 
     e.preventDefault();
 
@@ -100,9 +114,9 @@ const Welcome = () => {
             <Input placeholder="Address" value="Gutta Wallet"  className="text-white width-32" name="addressTo" type="text" handleChange={handleChange} /> 
             
             {/* <Input placeholder="0x2B238aBA1E1BE2666d77feeeb375F9f1830DB4DB" name="addressTo" type="text" handleChange={handleChange} /> */}
-            <Input placeholder="Amount (ETH)" name="amount" type="number" handleChange={handleChange} />
-            <Input placeholder="Keyword (Gif)" name="keyword" type="text" handleChange={handleChange} />
-            <Input placeholder="Enter Message" name="message" type="text" handleChange={handleChange} />
+            <Input placeholder="Amount (ETH)" name="amount" type="number" handleChange={handleChange} value={amount} />
+            <Input placeholder="Keyword (Gif)" name="keyword" type="text" handleChange={handleChange} value={keyword} />
+            <Input placeholder="Enter Message" name="message" type="text" handleChange={handleChange} value={message} />
 
             <div className="h-[1px] w-full bg-gray-400 my-2" />
 

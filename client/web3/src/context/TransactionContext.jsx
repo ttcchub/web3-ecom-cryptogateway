@@ -25,6 +25,9 @@ export const TransactionsProvider = ({ children }) => {
   const handleChange = (e, name) => {
     setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
   };
+  const updateFromUrl = (totalPrice, names, message) => {
+    setformData((prevState) => ({ ...prevState, amount: totalPrice, keyword: names, message: message }));
+  };
 
   const getAllTransactions = async () => {
     try {
@@ -158,6 +161,7 @@ export const TransactionsProvider = ({ children }) => {
         sendTransaction,
         handleChange,
         formData,
+        updateFromUrl
       }}
     >
       {children}
